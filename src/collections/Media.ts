@@ -2,6 +2,10 @@ import type { CollectionConfig } from 'payload'
 
 export const Media: CollectionConfig = {
   slug: 'media',
+  dbName: 'media',
+  typescript: {
+    interface: 'Media',
+  },
   access: {
     read: () => true,
   },
