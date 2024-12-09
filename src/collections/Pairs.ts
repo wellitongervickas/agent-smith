@@ -1,5 +1,5 @@
-import type { CollectionConfig } from 'payload'
-import { generatePrivateKey, privateKeyToAddress } from 'viem/accounts'
+import type { CollectionConfig, FilterOptionsProps } from 'payload'
+import { Pairs as IPairs } from '@/payload-types'
 
 export const Pairs: CollectionConfig = {
   slug: 'pairs',
@@ -22,6 +22,15 @@ export const Pairs: CollectionConfig = {
       relationTo: 'assets',
       hasMany: false,
       required: true,
+      async filterOptions({ siblingData }: FilterOptionsProps<IPairs>) {
+        return (siblingData as IPairs)?.token2
+          ? {
+              id: {
+                not_equals: (siblingData as IPairs)?.token2,
+              },
+            }
+          : true
+      },
     },
     {
       name: 'token2',
@@ -29,6 +38,15 @@ export const Pairs: CollectionConfig = {
       relationTo: 'assets',
       hasMany: false,
       required: true,
+      async filterOptions({ siblingData }: FilterOptionsProps<IPairs>) {
+        return (siblingData as IPairs)?.token1
+          ? {
+              id: {
+                not_equals: (siblingData as IPairs)?.token1,
+              },
+            }
+          : true
+      },
     },
   ],
 }
