@@ -14,6 +14,8 @@ import { Assets } from './collections/Assets'
 import { Networks } from './collections/Networks'
 import { RPCS } from './collections/RPCS'
 import { Wallets } from './collections/Wallets'
+import { Pairs } from './collections/Pairs'
+import { Agents } from './collections/Agents'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -25,7 +27,7 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [Users, Media, Contracts, Assets, Networks, RPCS, Wallets],
+  collections: [Users, Media, Contracts, Assets, Networks, RPCS, Wallets, Pairs, Agents],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {

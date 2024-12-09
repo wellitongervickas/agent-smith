@@ -18,17 +18,22 @@ export interface Config {
     networks: Networks;
     rpcs: RPCS;
     wallets: Wallets;
+    pairs: Pairs;
+    agents: Agents;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
   };
   collectionsJoins: {
     users: {
-      wallets: 'wallets';
+      agents: 'agents';
     };
     networks: {
       contracts: 'contracts';
       rpcs: 'rpcs';
+    };
+    agents: {
+      wallet: 'wallets';
     };
   };
   collectionsSelect: {
@@ -39,6 +44,8 @@ export interface Config {
     networks: NetworksSelect<false> | NetworksSelect<true>;
     rpcs: RpcsSelect<false> | RpcsSelect<true>;
     wallets: WalletsSelect<false> | WalletsSelect<true>;
+    pairs: PairsSelect<false> | PairsSelect<true>;
+    agents: AgentsSelect<false> | AgentsSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
@@ -81,8 +88,8 @@ export interface UserAuthOperations {
  */
 export interface Users {
   id: number;
-  wallets?: {
-    docs?: (number | Wallets)[] | null;
+  agents?: {
+    docs?: (number | Agents)[] | null;
     hasNextPage?: boolean | null;
   } | null;
   updatedAt: string;
@@ -98,6 +105,23 @@ export interface Users {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "agents".
+ */
+export interface Agents {
+  id: number;
+  name: string;
+  address: string;
+  privateKey: string;
+  user: number | Users;
+  wallet?: {
+    docs?: (number | Wallets)[] | null;
+    hasNextPage?: boolean | null;
+  } | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "wallets".
  */
 export interface Wallets {
@@ -105,7 +129,7 @@ export interface Wallets {
   name: string;
   address: string;
   privateKey: string;
-  user: number | Users;
+  agent: number | Agents;
   updatedAt: string;
   createdAt: string;
 }
@@ -188,6 +212,18 @@ export interface Assets {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "pairs".
+ */
+export interface Pairs {
+  id: number;
+  name: string;
+  token1: number | Assets;
+  token2: number | Assets;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-locked-documents".
  */
 export interface PayloadLockedDocument {
@@ -220,6 +256,14 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'wallets';
         value: number | Wallets;
+      } | null)
+    | ({
+        relationTo: 'pairs';
+        value: number | Pairs;
+      } | null)
+    | ({
+        relationTo: 'agents';
+        value: number | Agents;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -268,7 +312,7 @@ export interface PayloadMigration {
  * via the `definition` "users_select".
  */
 export interface UsersSelect<T extends boolean = true> {
-  wallets?: T;
+  agents?: T;
   updatedAt?: T;
   createdAt?: T;
   email?: T;
@@ -353,7 +397,31 @@ export interface WalletsSelect<T extends boolean = true> {
   name?: T;
   address?: T;
   privateKey?: T;
+  agent?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "pairs_select".
+ */
+export interface PairsSelect<T extends boolean = true> {
+  name?: T;
+  token1?: T;
+  token2?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "agents_select".
+ */
+export interface AgentsSelect<T extends boolean = true> {
+  name?: T;
+  address?: T;
+  privateKey?: T;
   user?: T;
+  wallet?: T;
   updatedAt?: T;
   createdAt?: T;
 }

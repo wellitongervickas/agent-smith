@@ -1,11 +1,11 @@
 import type { CollectionConfig } from 'payload'
 import { generatePrivateKey, privateKeyToAddress } from 'viem/accounts'
 
-export const Wallets: CollectionConfig = {
-  slug: 'wallets',
-  dbName: 'wallets',
+export const Agents: CollectionConfig = {
+  slug: 'agents',
+  dbName: 'agents',
   typescript: {
-    interface: 'Wallets',
+    interface: 'Agents',
   },
   admin: {
     useAsTitle: 'name',
@@ -53,11 +53,17 @@ export const Wallets: CollectionConfig = {
       required: true,
     },
     {
-      name: 'agent',
+      name: 'user',
       type: 'relationship',
-      relationTo: 'agents',
+      relationTo: 'users',
       hasMany: false,
       required: true,
+    },
+    {
+      name: 'wallet',
+      collection: 'wallets',
+      type: 'join',
+      on: 'agent',
     },
   ],
 }

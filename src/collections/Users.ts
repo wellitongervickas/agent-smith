@@ -11,11 +11,9 @@ export const Users: CollectionConfig = {
   },
   auth: true,
   fields: [
-    // Email added by default
-    // Add more fields as needed
     {
-      name: 'wallets',
-      collection: 'wallets',
+      name: 'agents',
+      collection: 'agents',
       type: 'join',
       on: 'user',
     },
