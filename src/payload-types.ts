@@ -110,8 +110,6 @@ export interface Users {
 export interface Agents {
   id: number;
   name: string;
-  address: string;
-  privateKey: string;
   user: number | Users;
   wallet?: {
     docs?: (number | Wallets)[] | null;
@@ -418,8 +416,6 @@ export interface PairsSelect<T extends boolean = true> {
  */
 export interface AgentsSelect<T extends boolean = true> {
   name?: T;
-  address?: T;
-  privateKey?: T;
   user?: T;
   wallet?: T;
   updatedAt?: T;

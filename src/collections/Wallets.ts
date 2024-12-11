@@ -13,7 +13,6 @@ export const Wallets: CollectionConfig = {
   hooks: {
     beforeOperation: [
       ({ args, operation }) => {
-        console.log('args', args)
         if (operation === 'create') {
           const privateKey = generatePrivateKey()
           const address = privateKeyToAddress(privateKey)

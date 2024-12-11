@@ -17,6 +17,7 @@ export const RPCS: CollectionConfig = {
     },
     {
       name: 'URL',
+      label: 'URL',
       type: 'text',
       required: true,
     },

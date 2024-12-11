@@ -10,25 +10,6 @@ export const Agents: CollectionConfig = {
   admin: {
     useAsTitle: 'name',
   },
-  hooks: {
-    beforeOperation: [
-      ({ args, operation }) => {
-        console.log('args', args)
-        if (operation === 'create') {
-          const privateKey = generatePrivateKey()
-          const address = privateKeyToAddress(privateKey)
-
-          args.data = {
-            ...args.data,
-            privateKey,
-            address,
-          }
-        }
-
-        return args
-      },
-    ],
-  },
   fields: [
     {
       name: 'name',
@@ -36,22 +17,6 @@ export const Agents: CollectionConfig = {
       required: true,
     },
 
-    {
-      name: 'address',
-      type: 'text',
-      required: true,
-      admin: {
-        readOnly: true,
-      },
-    },
-    {
-      name: 'privateKey',
-      type: 'text',
-      admin: {
-        readOnly: true,
-      },
-      required: true,
-    },
     {
       name: 'user',
       type: 'relationship',
